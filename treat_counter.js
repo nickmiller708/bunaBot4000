@@ -26,11 +26,25 @@ class TreatCounter {
 	  return totalTreats + 1;
 	}
 
+	decreaseTreatCount() {
+		let totalTreats = this.treatCounter['totalTreats'] || 0; 
+		let todaysTreats = this.treatCounter[this.formatDateString()] || 0;
+	  	let poopCount = this.randomNumber(0, todaysTreats);
+	  	this.treatCounter['totalTreats'] = totalTreats - poopCount;
+	  	this.treatCounter[this.formatDateString()] = totalTreats - poopCount;
+
+	  	try {
+	  		this.updateTreatFile();
+	  	} catch (error) { 
+	  		console.log('failed to write to file');
+	  		console.log(error);
+	  	}
+	  	return totalTreats - poopCount;
+	}
+
 	updateTreatFile() { 
-		console.log('trying to save');
-		console.log(this.treatCounter);
-	let contents = JSON.stringify(this.treatCounter);
-	  fs.writeFile(this.path_to_file, contents, error => {
+		let contents = JSON.stringify(this.treatCounter);
+		fs.writeFile(this.path_to_file, contents, error => {
 	    if (error) {
 	      console.log('could not write to file. sadge');
 	      console.error(error);
@@ -39,6 +53,10 @@ class TreatCounter {
 	  });
 	}
 
+	randomNumber(min, max) { 
+    	 return Math.floor(Math.random() * max);
+	}	 
+	
 	// Formats Date String for Curent Day
 	formatDateString() { 
 	  const currentDate = new Date();

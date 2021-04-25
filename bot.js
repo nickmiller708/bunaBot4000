@@ -51,13 +51,17 @@ function onMessageHandler (target, context, msg, self) {
   } else if (commandName === '!listcommands') {
     const listCommandUtterance = listCommands(); 
     client.say(target, listCommandUtterance);
-  }else if (commandName === '!4lm')  {
+  } else if (commandName === '!4lm')  {
     client.say(target, 'Buna loves 4LM. Bork Bork. Join the discord: https://discord.gg/KP45a9M');
   } else if (commandName === '!givetreat') {
-    let treatsGiven = treatCounter.increaseTreatCount();
-    client.say(target, `${treatsGiven} treat has been fed to Buna`);
+    let treatsGiven = treatCounter.increaseTreatCount(); 
+   client.say(target, `${treatsGiven} treat has been fed to Buna`);
   } else if (commandName === '!treatcount') {
     client.say(target, `${treatCounter.getTreatCount()} treats have been fed to Buna`);
+  } else if (commandName === '!poop') {
+    let currentTreats = treatCounter.getTreatCount();
+    let treatsLeft = treatCounter.decreaseTreatCount();
+    client.say(target, `Luna pooped out ${currentTreats - treatsLeft}.`)
   } else if (commandName === '!pickle') {
     client.say(target, 'Luna loves peeckle');
   } else if (commandName === '!subcheck') {
